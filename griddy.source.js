@@ -15,17 +15,13 @@
 // Source
 //
 
-debug = false;
-
 // modified $.style.insertRule with custom stylesheet ID
 (function( $ )
  {
      $.style={
          insertRule:function(selector,rules,contxt)
          {
-			 if(debug) {
-             	console.log(selector+" { "+rules+" } ");
-			 }
+             console.log(selector+" { "+rules+" } ");
              $("#griddy-styles").append("\n"+selector+" { "+rules+" } ");
          }
      }; 
@@ -40,7 +36,8 @@ debug = false;
         gridSize = gridSize || 1024;
         colClassName = colClassName || "col";
         // grid size
-        $.style.insertRule([sel], 'max-width:'+gridSize+'px;');
+        $.style.insertRule([sel], 'max-width:'+gridSize+'px; n');
+        $.style.insertRule([sel], 'min-width:'+(gridSize-300)+'px; n');
         // grid columns super
         $.style.insertRule([sel+" > [class*='"+colClassName+"-']"], 'float: left;');
         // after grid
@@ -56,5 +53,19 @@ debug = false;
         $.style.insertRule(['*, *:after, *:before'], '-webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;');
         $.style.insertRule([sel+" [class*='"+colClassName+"-']"], 'padding-right: 20px;');
         $.style.insertRule([sel+" [class*='"+colClassName+"-']:last-of-type"], 'padding-right: 0px;');
+        $.style.insertRule([sel+" .spacer"], 'background:none;');
+        $.style.insertRule([sel+" [class*='"+colClassName+"-'] > *"], 'text-size:1.5vh;');
     };
 }) (jQuery);
+
+//
+// Gridd
+//
+// Usage:
+//
+// $(SOMETHING).griddy(SIZE defaults to 1024,
+//             COLCLASSNAME defaults to "col")
+//
+//
+//
+// $(".container").griddy(1024);
